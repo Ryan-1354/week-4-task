@@ -21,7 +21,11 @@ function Pagination({ pagination, onChangePage }) {
             className={`page-item ${pagination.current_page === index + 1 ? "active" : ""}`}
             key={`${index}_page`}
           >
-            <a className="page-link" href="#">
+            <a
+              className="page-link"
+              href="#"
+              onClick={(e) => handleClick(e, index + 1)}
+            >
               {index + 1}
             </a>
           </li>
