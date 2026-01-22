@@ -168,6 +168,29 @@ function App() {
     }
   };
 
+  //上傳圖片API
+  const uploadImage = async (e) => {
+    console.log(e);
+    const file = e.target.files?.[0];
+    if (!file) {
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append("file-to-upload", file);
+      const response = await axios.post(
+        `${API_BASE}/v2/api/${API_PATH}/admin/upload`,
+        formData,
+      );
+      setTemplateProduct((pre) => ({
+        ...pre,
+        imageUrl: response.data.imageUrl,
+      }));
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   useEffect(() => {
     const token = document.cookie
       .split("; ")
@@ -188,7 +211,7 @@ function App() {
         setIsAuth(true);
         getProducts();
       } catch (err) {
-        console.log(err.message);
+        console.log(err);
       }
     };
     checkLogin();
@@ -316,6 +339,7 @@ function App() {
         delProduct={delProduct}
         closeModal={closeModal}
         updateProduct={updateProduct}
+        uploadImage={uploadImage}
       />
     </>
   );
